@@ -19,13 +19,17 @@ Note2: The API key needs to be correct for the script to work properly.
 
 def main() -> str:
     hits = 0
+    
+    # defining inputs
     n = int(input ("Provide the number of iterations: "))
+    protocol =str(input("Provide the protocol (http/https):  "))
     domain=str(input("Provide the domain: "))
     path = str(input("Provide the path: "))
     api_key=str(input("Provide the API key related to " + domain +": "))
     logs = str(input("Enable debugging logs? (yes/no) "))
+    
     for i in range (1,n+1):
-        if mpulse_check(domain, path, api_key, logs):
+        if mpulse_check(protocol, domain, path, api_key, logs):
             hits=hits+1
             print("Attempt "+ str(i) + " : HIT")
         else:
@@ -35,8 +39,8 @@ def main() -> str:
     message = "Out of " + str(n) + " request(s), " + str(hits)  +" triggred mPulse, which is " + str(percentage) + "%."
     print(message)
 
-def mpulse_check (domain: str, path: str, api_key: str, logs: bool) -> bool:
-    url = "https://" + domain + path
+def mpulse_check (protocol: str, domain: str, path: str, api_key: str, logs: bool) -> bool:
+    url = protocol + "://" + domain + path
     answer = False
 
     # creating a http request
